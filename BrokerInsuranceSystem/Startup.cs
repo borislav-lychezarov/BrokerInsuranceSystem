@@ -1,5 +1,6 @@
 namespace BrokerInsuranceSystem
 {
+    using AutoMapper;
     using BrokerInsuranceData;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -8,7 +9,8 @@ namespace BrokerInsuranceSystem
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-
+    using System;
+    using System.Threading.Tasks;
 
     public class Startup
     {
@@ -29,6 +31,8 @@ namespace BrokerInsuranceSystem
                 .AddEntityFrameworkStores<BrokerInsuranceDatabase>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,13 +57,21 @@ namespace BrokerInsuranceSystem
             app.UseAuthentication();
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "TheBoss",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }
+
+        
     }
+
 }
