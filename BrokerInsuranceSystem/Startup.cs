@@ -2,6 +2,8 @@ namespace BrokerInsuranceSystem
 {
     using AutoMapper;
     using BrokerInsuranceData;
+    using BrokerInsuranceSystem.Areas.TheBoss.Services.User;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -9,8 +11,6 @@ namespace BrokerInsuranceSystem
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using System;
-    using System.Threading.Tasks;
 
     public class Startup
     {
@@ -27,12 +27,36 @@ namespace BrokerInsuranceSystem
             services.AddDbContext<BrokerInsuranceDatabase>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddDefaultIdentity<IdentityUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.User.RequireUniqueEmail = true;
+            })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<BrokerInsuranceDatabase>();
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+
+            services.AddControllersWithViews(config =>
+            {
+
+            });
+            services.AddRazorPages(options =>
+            {
+                
+            });
+
+            services.AddAuthorization(opt =>
+            {
+                opt.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+            });
 
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddTransient<IUserService, UserService>();
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,7 +86,7 @@ namespace BrokerInsuranceSystem
             {
                 endpoints.MapControllerRoute(
                     name: "TheBoss",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{area:exists}/{controller=AdminHome}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(
                     name: "default",
@@ -71,7 +95,9 @@ namespace BrokerInsuranceSystem
             });
         }
 
-        
+
+
+
     }
 
 }

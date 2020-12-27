@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BrokerInsuranceSystem.Models.BossAreaModels;
-using DatabaseModels.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace BrokerInsuranceSystem.Mapper.BossUsers

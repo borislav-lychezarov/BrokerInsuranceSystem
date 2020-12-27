@@ -1,12 +1,11 @@
 ﻿namespace BrokerInsuranceSystem.Controllers
 {
-    using BrokerInsuranceSystem.Models;
+    using BrokerInsuranceSystem.Enums;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using System.Diagnostics;
 
-    [Authorize]
+    [Authorize(Roles = nameof(RoleTypes.Employee))]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

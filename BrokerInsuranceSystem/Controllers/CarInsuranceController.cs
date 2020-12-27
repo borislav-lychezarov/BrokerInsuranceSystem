@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BrokerInsuranceSystem.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BrokerInsuranceSystem.Controllers
 {
-    [Authorize]
+    [Authorize(Roles =nameof(RoleTypes.Employee))]
     public class CarInsuranceController : Controller
     {
         public IActionResult Index()

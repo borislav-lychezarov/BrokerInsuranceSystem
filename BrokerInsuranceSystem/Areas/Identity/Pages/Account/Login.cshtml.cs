@@ -79,7 +79,14 @@ namespace BrokerInsuranceSystem.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    
                     _logger.LogInformation("User logged in.");
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+                    bool isAdminUser = await _userManager.IsInRoleAsync(user, "Admin");
+                    if (isAdminUser)
+                    {
+                        returnUrl = "/TheBoss";
+                    }
                     return this.LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

@@ -26,9 +26,9 @@
 
   <ItemGroup>
     <Folder Include="Areas\TheBoss\Data\" />
-    <Folder Include="Areas\TheBoss\Models\" />
     <Folder Include="Controllers\" />
     <Folder Include="Data\" />
+    <Folder Include="Filters\" />
     <Folder Include="Views\Error\" />
     <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\images\" />
