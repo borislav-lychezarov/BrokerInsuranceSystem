@@ -1,6 +1,6 @@
-﻿namespace BrokerInsuranceSystem.Models.BossAreaModels
+﻿namespace BrokerInsuranceSystem.Areas.TheBoss.Models
 {
-    public class GetAllUsersModelDto
+    public class UserModelDto
     {
         public string Id { get; set; }
 
@@ -8,5 +8,6 @@
 
         public string Email { get; set; }
 
+        public string PhoneNumber { get; set; }
     }
 }

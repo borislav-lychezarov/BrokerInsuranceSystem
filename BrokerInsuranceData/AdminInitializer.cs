@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using DatabaseModels.Models.User;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace BrokerInsuranceData
     {
         public static async Task Initializer(IServiceProvider serviceProvider)
         {
-            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
@@ -26,7 +27,7 @@ namespace BrokerInsuranceData
                         .FindByEmailAsync("boss@mail.com");
                     if (admin == null)
                     {
-                        admin = new IdentityUser
+                        admin = new ApplicationUser
                         {
                             Email = "boss@mail.com",
                             UserName = "boss@mail.com",
@@ -41,6 +42,11 @@ namespace BrokerInsuranceData
                         }
                     }
                 }
+            }
+            var emploUserRole = await roleManager.RoleExistsAsync("Employee");
+            if (!emploUserRole)
+            {
+                await roleManager.CreateAsync(new IdentityRole("Employee"));
             }
         }
     }

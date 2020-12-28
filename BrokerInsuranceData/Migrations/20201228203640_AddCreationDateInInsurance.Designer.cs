@@ -4,14 +4,16 @@ using BrokerInsuranceData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BrokerInsuranceData.Migrations
 {
     [DbContext(typeof(BrokerInsuranceDatabase))]
-    partial class BrokerInsuranceDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20201228203640_AddCreationDateInInsurance")]
+    partial class AddCreationDateInInsurance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

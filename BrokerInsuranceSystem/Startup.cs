@@ -3,6 +3,7 @@ namespace BrokerInsuranceSystem
     using AutoMapper;
     using BrokerInsuranceData;
     using BrokerInsuranceSystem.Areas.TheBoss.Services.User;
+    using DatabaseModels.Models.User;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -27,7 +28,7 @@ namespace BrokerInsuranceSystem
             services.AddDbContext<BrokerInsuranceDatabase>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.User.RequireUniqueEmail = true;
@@ -51,6 +52,8 @@ namespace BrokerInsuranceSystem
                     .Build();
             });
 
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
             services.AddAutoMapper(typeof(Startup));
 
             services.AddTransient<IUserService, UserService>();
@@ -65,7 +68,7 @@ namespace BrokerInsuranceSystem
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {

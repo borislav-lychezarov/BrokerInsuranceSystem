@@ -4,187 +4,22 @@ using BrokerInsuranceData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BrokerInsuranceData.Migrations
 {
     [DbContext(typeof(BrokerInsuranceDatabase))]
-    partial class BrokerInsuranceDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20201227150545_CreateAppUser")]
+    partial class CreateAppUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.1");
-
-            modelBuilder.Entity("DatabaseModels.Models.CarInsurances.Car", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Brand")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EngineType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Model")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Power")
-                        .HasPrecision(5, 2)
-                        .HasColumnType("decimal(5,2)");
-
-                    b.Property<string>("RegistrationPlate")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("VehicleType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Vin")
-                        .IsRequired()
-                        .HasMaxLength(17)
-                        .HasColumnType("nvarchar(17)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cars");
-                });
-
-            modelBuilder.Entity("DatabaseModels.Models.CarInsurances.Insurance", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CarId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreationDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 12, 28, 20, 36, 39, 499, DateTimeKind.Utc).AddTicks(2752));
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("IsCanceled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Insurances");
-                });
-
-            modelBuilder.Entity("DatabaseModels.Models.CarInsurances.OwnerCar", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CarId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LegalEntityOwnerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("OwnerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarId");
-
-                    b.HasIndex("LegalEntityOwnerId");
-
-                    b.HasIndex("OwnerId");
-
-                    b.ToTable("OwnerCars");
-                });
-
-            modelBuilder.Entity("DatabaseModels.Models.OwnerType.LegalEntityOwner", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LegalEntityOwners");
-                });
-
-            modelBuilder.Entity("DatabaseModels.Models.OwnerType.Owner", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MiddleName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Owners");
-                });
 
             modelBuilder.Entity("DatabaseModels.Models.User.ApplicationUser", b =>
                 {
@@ -386,52 +221,6 @@ namespace BrokerInsuranceData.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("DatabaseModels.Models.CarInsurances.Insurance", b =>
-                {
-                    b.HasOne("DatabaseModels.Models.CarInsurances.Car", "Car")
-                        .WithMany("Insurances")
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("DatabaseModels.Models.User.ApplicationUser", "Creator")
-                        .WithMany("Insurances")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Car");
-
-                    b.Navigation("Creator");
-                });
-
-            modelBuilder.Entity("DatabaseModels.Models.CarInsurances.OwnerCar", b =>
-                {
-                    b.HasOne("DatabaseModels.Models.CarInsurances.Car", "Car")
-                        .WithMany("Owners")
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("DatabaseModels.Models.OwnerType.LegalEntityOwner", "LegalEntityOwner")
-                        .WithMany("Cars")
-                        .HasForeignKey("LegalEntityOwnerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("DatabaseModels.Models.OwnerType.Owner", "Owner")
-                        .WithMany("Cars")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Car");
-
-                    b.Navigation("LegalEntityOwner");
-
-                    b.Navigation("Owner");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -481,28 +270,6 @@ namespace BrokerInsuranceData.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("DatabaseModels.Models.CarInsurances.Car", b =>
-                {
-                    b.Navigation("Insurances");
-
-                    b.Navigation("Owners");
-                });
-
-            modelBuilder.Entity("DatabaseModels.Models.OwnerType.LegalEntityOwner", b =>
-                {
-                    b.Navigation("Cars");
-                });
-
-            modelBuilder.Entity("DatabaseModels.Models.OwnerType.Owner", b =>
-                {
-                    b.Navigation("Cars");
-                });
-
-            modelBuilder.Entity("DatabaseModels.Models.User.ApplicationUser", b =>
-                {
-                    b.Navigation("Insurances");
                 });
 #pragma warning restore 612, 618
         }

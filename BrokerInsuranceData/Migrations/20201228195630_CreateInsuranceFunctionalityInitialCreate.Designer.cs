@@ -4,14 +4,16 @@ using BrokerInsuranceData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BrokerInsuranceData.Migrations
 {
     [DbContext(typeof(BrokerInsuranceDatabase))]
-    partial class BrokerInsuranceDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20201228195630_CreateInsuranceFunctionalityInitialCreate")]
+    partial class CreateInsuranceFunctionalityInitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,11 +70,6 @@ namespace BrokerInsuranceData.Migrations
                     b.Property<string>("CarId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreationDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 12, 28, 20, 36, 39, 499, DateTimeKind.Utc).AddTicks(2752));
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");

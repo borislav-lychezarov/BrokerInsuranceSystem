@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using BrokerInsuranceSystem.Models.BossAreaModels;
-using Microsoft.AspNetCore.Identity;
+using BrokerInsuranceSystem.Areas.TheBoss.Models;
+using DatabaseModels.Models.User;
 
 namespace BrokerInsuranceSystem.Mapper.BossUsers
 {
@@ -8,8 +8,9 @@ namespace BrokerInsuranceSystem.Mapper.BossUsers
     {
         public UserProfile()
         {
-            this.CreateMap<IdentityUser, GetAllUsersModelDto>();
-            this.CreateMap<IdentityUser, UserModelDto>();
+            this.CreateMap<ApplicationUser, GetAllUsersModelDto>();
+            this.CreateMap<ApplicationUser, UserModelDto>()
+                .ReverseMap();
         }
     }
 }
